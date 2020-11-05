@@ -1,0 +1,408 @@
+<!doctype html>
+<!--Quite a few clients strip your Doctype out, and some even apply their own. Many clients do honor your doctype and it can make things much easier if you can validate constantly against a Doctype.-->
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>用户评论界面</title>
+
+<!--    <link th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/css/simpleGridTemplate.css'" rel="stylesheet">
+    <link th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/css/bootstrap-4.2.1.css'" rel="stylesheet">-->
+
+    <link rel="stylesheet" th:href="@{'../templates/css/simpleGridTemplate.css'}"/>
+    <link rel="stylesheet" th:href="@{'../templates/css/bootstrap-4.2.1.css'}"/>
+
+<style type="text/css">
+body {
+	margin: 0;
+}
+body, table, td, p, a, li, blockquote {
+	-webkit-text-size-adjust: none!important;
+	font-family: sans-serif;
+	font-style: normal;
+	font-weight: 400;
+}
+button {
+	width: 90%;
+}
+
+@media screen and (max-width:600px) {
+/*styling for objects with screen size less than 600px; */
+body, table, td, p, a, li, blockquote {
+	-webkit-text-size-adjust: none!important;
+	font-family: sans-serif;
+}
+table {
+	/* All tables are 100% width */
+	width: 100%;
+}
+.footer {
+	/* Footer has 2 columns each of 48% width */
+	height: auto !important;
+	max-width: 48% !important;
+	width: 48% !important;
+}
+table.responsiveImage {
+	/* Container for images in catalog */
+	height: auto !important;
+	max-width: 30% !important;
+	width: 30% !important;
+}
+table.responsiveContent {
+	/* Content that accompanies the content in the catalog */
+	height: auto !important;
+	max-width: 66% !important;
+	width: 66% !important;
+}
+.top {
+	/* Each Columnar table in the header */
+	height: auto !important;
+	max-width: 48% !important;
+	width: 48% !important;
+}
+.catalog {
+	margin-left: 0%!important;
+}
+}
+
+@media screen and (max-width:480px) {
+/*styling for objects with screen size less than 480px; */
+body, table, td, p, a, li, blockquote {
+	-webkit-text-size-adjust: none!important;
+	font-family: sans-serif;
+}
+table {
+	/* All tables are 100% width */
+	width: 100% !important;
+	border-style: none !important;
+}
+.footer {
+	/* Each footer column in this case should occupy 96% width  and 4% is allowed for email client padding*/
+	height: auto !important;
+	max-width: 96% !important;
+	width: 96% !important;
+}
+.table.responsiveImage {
+	/* Container for each image now specifying full width */
+	height: auto !important;
+	max-width: 96% !important;
+	width: 96% !important;
+}
+.table.responsiveContent {
+	/* Content in catalog  occupying full width of cell */
+	height: auto !important;
+	max-width: 96% !important;
+	width: 96% !important;
+}
+.top {
+	/* Header columns occupying full width */
+	height: auto !important;
+	max-width: 100% !important;
+	width: 100% !important;
+}
+.catalog {
+	margin-left: 0%!important;
+}
+button {
+	width: 90%!important;
+}
+
+.white{
+    color: white;
+}
+
+.red{
+    color: red;
+}
+
+
+
+}
+</style>
+
+</head>
+
+<!--导航栏-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <a class="navbar-brand" href="#"><img alt="图片" th:src="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/image/logo.jpg'" width="50px" height="50px" /></a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/page/index'">首页 <span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/page/train'">实训项目</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="'http://localhost:8080'  + ${#request.getContextPath()} + '/vision/allVision'">教学课程</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">实验竞赛</a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" th:href="'http://localhost:8080' + ${#request.getContextPath()} + '/essay/allEssay'">交流问答</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+
+            <li class="nav-item dropdown">
+
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${session.student.getStudentName()}">
+                    <img alt="图片" th:src="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/image/head.jpg'" width="30px;" />
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                    <a class="dropdown-item btn btn-primary" data-toggle="modal" data-target="#myModal" href="javascript:void(0);">个人信息</a>
+
+                    <a class="dropdown-item" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/student/quit'">退出登录</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+
+            </li>
+
+        </ul>
+
+    </div>
+
+</nav>
+	
+<body yahoo="yahoo">
+	
+<table width="100%"  cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td><table width="600"  align="center" cellpadding="0" cellspacing="0">
+          <!-- Main Wrapper Table with initial width set to 60opx -->
+          <tbody>
+            <tr>
+              <td><table bgcolor="#d0cfcf" class="top" width="48%"  align="left" cellpadding="0" cellspacing="0" style="padding:10px 10px 10px 10px;">
+                  <!-- First header column with Logo -->
+                  <tbody>
+                    <tr>
+                      <td style="font-size: 12px; color:#929292; text-align:center; font-family: sans-serif;">LOGO</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table bgcolor="#d0cfcf" class="top" width="48%"  align="left" cellpadding="0" cellspacing="0" style="padding:10px 10px 10px 10px; text-align:right">
+                  <!-- Second header column with ISSUE|DATE -->
+                  <tbody>
+                    <tr>
+                      <td style="font-size: 12px; color:#929292; text-align:center; font-family: sans-serif;">ISSUE  |  DATE</td>
+                    </tr>
+                  </tbody>
+                </table></td>
+            </tr>
+
+            <tr> 
+              <!-- Introduction area -->
+              <td><table width="96%"  align="left" cellpadding="0" cellspacing="0">
+                  <tr> 
+                    <!-- row container for TITLE/EMAIL THEME -->
+                    <td align="center" style="font-size: 32px; font-weight: 300; line-height: 2.5em; color: #929292; font-family: sans-serif;" th:text="${session.essay.getEssayName()}"></td>
+                  </tr>
+                  <tr> 
+                    <!-- row container for Tagline -->
+                    <td align="center" style="font-size: 16px; font-weight:300; color: #929292; font-family: sans-serif;" th:text="${session.essay.getStudentName()}"></td>
+                  </tr>
+                  <tr>
+                    <td style="font-size: 0; line-height: 0;" height="20"><table width="96%" align="left"  cellpadding="0" cellspacing="0">
+                        <tr> 
+                          <!-- HTML Spacer row -->
+                          <td style="font-size: 0; line-height: 0;" height="20">&nbsp;</td>
+                        </tr>
+                      </table></td>
+                  </tr>
+                  <tr> 
+                    <!-- Row container for Intro/ Description -->
+                    <td align="left" style="font-size: 17px; font-style: normal; font-weight: 100; color: #929292; line-height: 1.8; text-align:justify; padding:10px 20px 0px 20px; font-family: sans-serif;" th:text="${session.essay.getContent()}"></td>
+                  </tr>
+                </table></td>
+            </tr>
+			    
+				 <tr> 
+                    <!-- row container for TITLE/EMAIL THEME -->
+                    <td align="center" style="font-size: 32px; font-weight: 300; line-height: 2.5em; color: #929292; font-family: sans-serif; padding-top: 200px;">评论中心</td>
+                  </tr>
+
+            <hr>
+			  
+                  <tr> 
+                    <!-- row container for Tagline -->
+                    <td align="center" style="font-size: 16px; font-weight:300; color: #929292; font-family: sans-serif;">COMMETN CENTRAL </td>
+                  </tr>
+                  <tr>
+                    <td style="font-size: 0; line-height: 0;" height="20"><table width="96%" align="left"  cellpadding="0" cellspacing="0">
+                        <tr> 
+                          <!-- HTML Spacer row -->
+                          <td style="font-size: 0; line-height: 0;" height="20">&nbsp;</td>
+                        </tr>
+                      </table></td>
+                  </tr>
+			 	 		  
+          </tbody>
+        </table></td>
+	  </tr>
+  </tbody>
+</table>
+	
+        <div class="col-md-6 col-sm-12 container" th:each="reply : ${list}" style="margin-top: 100px;" >
+			
+          <div class="row">
+            <div class="col-5">
+              <h4 th:text="${reply.getStudentName()}"></h4>
+
+                <span class="praiseBtn">
+
+                    <a>
+                        <svg  width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                        </svg>
+                    </a>
+                        （<a href="#" praise-flag="0" data-id="7">2</a>）
+　　　　                <!--praise-flag="0" 记录点赞标识（是否已赞过）,data-id记录文章id-->
+                </span>
+
+            </div>
+
+            <div class="col-6">
+              <h5 class="text-right" th:text="${reply.getReplyTime()}"><span aria-hidden="true"></span></h5>
+            </div>
+          </div>
+
+          <h5>点赞数：<span class="badge badge-secondary" th:text="${reply.getFans()}"></span></h5>
+
+          <p th:text="${reply.getContent()}"></p>
+
+        </div>
+
+<div class="container">
+
+    <h2 style="font-size: 32px; font-weight: 300; line-height: 2.5em; color: #929292; font-family: sans-serif; padding-top: 200px;">发表评论</h2>
+    <hr>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8  col-12 jumbotron">
+
+            <form method="post" th:action="'http://localhost:8080' + ${#request.getContextPath()} + '/reply/addReply'">
+
+                <div class="form-group">
+                    <label>评论内容</label>
+                    <textarea rows="10" cols="100" class="form-control" name="content" placeholder="评论" aria-describedby="messageHelp"></textarea>
+                    <span id="messageHelp" class="form-text text-muted" style="display: none;">请输入评论</span>
+                </div>
+
+                <input type="text" name="stuNo" th:value="${session.student.getStuNo()}" hidden />
+
+                <input type="text" name="essayID" th:value="${session.essay.getEssayID()}" hidden />
+
+                <input type="text" name="studentName" th:value="${session.student.getStudentName()}" hidden />
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">发表</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- 按钮触发模态框 -->
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">用 户 信 息</h4>
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">学号</span>
+                </div>
+                <input type="text" class="form-control" th:value="${session.student.getStuNo()}" readonly aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon2">用户名</span>
+                </div>
+                <input type="text" class="form-control" th:value="${session.student.getUserName()}" readonly aria-label="Username" aria-describedby="basic-addon2">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">姓名</span>
+                </div>
+                <input type="text" class="form-control" th:value="${session.student.getStudentName()}" readonly aria-label="Username" aria-describedby="basic-addon3">
+            </div>
+
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon4">年龄</span>
+                </div>
+                <input type="text" class="form-control" th:value="${session.student.getAge()}" readonly aria-label="Username" aria-describedby="basic-addon5">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon5">性别</span>
+                </div>
+                <input type="text" class="form-control" th:value="${session.student.getSex()}" readonly aria-label="Username" aria-describedby="basic-addon5">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon6">班级号</span>
+                </div>
+                <input type="text" class="form-control" th:value="${session.student.getClassNo()}" readonly aria-label="Username" aria-describedby="basic-addon6">
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<hr>
+
+<div class="copyright">&copy;2020 - <strong>VRPhysics</strong></div>
+
+
+<script th:src="@{'/templates/js/jquery-3.3.1.min.js'}"></script>
+<script th:src="@{'/templates/js/popper.min.js'}"></script>
+<script th:src="@{'/templates/js/bootstrap-4.2.1.js'}"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+<script type="text/javascript" th:inline="javascript">
+    //利用ajax设置用户点赞设置
+    $(function () {
+        window.setFan = function (e) {
+            alert('调用了这个函数');
+        }
+    })
+
+</script>
+	
+</body>
+
+</html>

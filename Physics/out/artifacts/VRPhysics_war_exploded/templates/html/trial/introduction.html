@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>实验内容介绍页面</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" th:href="@{'/templates/css/simpleGridTemplate.css'}"/>
+    <link rel="stylesheet" th:href="@{'/templates/css/bootstrap-4.2.1.css'}"/>
+
+  </head>
+  <body>
+
+	  	 <!--导航栏-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		
+      <a class="navbar-brand" href="#"><img alt="图片" th:src="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/image/logo.jpg'" width="50" height="50p" /></a>
+		
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      		<span class="navbar-toggler-icon"></span>
+      </button>
+		
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+
+          <li class="nav-item">
+            <a class="nav-link" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/page/index'">首页 <span class="sr-only">(current)</span></a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/page/train'">实训项目</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" th:href="'http://localhost:8080'  + ${#request.getContextPath()} + '/vision/allVision'">教学课程</a>
+          </li>
+			
+		  <li class="nav-item">
+            <a class="nav-link" href="#">实验竞赛</a>
+          </li>
+			
+		  <li class="nav-item">
+            <a class="nav-link" href="#">交流问答</a>
+          </li>
+			
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+			
+			<li class="nav-item dropdown">
+				
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           <img alt="图片" th:src="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/image/head.jpg'" width="30px;" /> 用户信息
+            </a>
+				
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">个人信息</a>
+              <a class="dropdown-item" href="#">退出登录</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+				
+          </li>
+			
+        </ul>
+		  
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="实践课程/教学课程" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
+        </form>
+		  
+      </div>
+		
+    </nav>
+	  
+    <div class="container">
+      <hr>
+
+      <div class="row">
+        <div class="col-6">
+          <h1 th:text="${trial.getFigureName()}"></h1>
+        </div>
+        <div class="col-6">
+          <p class="text-right"><a href="https://www.baidu.com/">百度百科</a></p>
+        </div>
+      </div>
+      <hr>
+
+      <div class="row">
+
+<!--        <div class="col-md-8 col-sm-12">
+
+          <div class="media">
+            <img class="mr-3" th:src="'http://localhost:8080' + ${#request.getContextPath()} + '/templates/image/famous.gif'" alt="人物图像">
+            <h5 class="mt-0">人物简介</h5>
+            <div class="media-body" th:text="${trial.getFigureIntroduction()}">
+
+            </div>
+          </div>
+
+        </div>-->
+
+        <div class="col-md-8 col-sm-12">
+          <div class="media">
+            <img class="mr-3" th:src="'http://localhost:8080' + ${#request.getContextPath()} + '/templates/image/famous.gif'" alt="Generic placeholder image">
+            <div class="media-body">
+              <h5 class="mt-0">人物简介</h5>
+              <div th:text="${trial.getFigureIntroduction()}"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+          <div class="row justify-content-md-around m-1">
+            <address>
+              <strong>说明</strong><br>
+              对人物生平感兴趣，可以前往百度百科细致了解<br>
+<!--              <abbr title="Phone">P:</abbr> (123) 456-7890<br>
+              <a href="mailto:#">first.last@example.com</a>-->
+            </address>
+          </div>
+        </div>
+
+      </div>
+
+      <hr>
+
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <h2 th:text="${trial.getTrialName()}"></h2>
+          <hr>
+          <div class="row">
+            <div class="col-6">
+              <h4>实验简介</h4>
+            </div>
+            <div class="col-6">
+              <h5 class="text-right"><span aria-hidden="true"></span> Jan 2002 - Dec 2006</h5>
+            </div>
+          </div>
+          <h5><span class="badge badge-secondary">Bachelors</span></h5>
+          <p th:text="${trial.getIntroduction()}"></p>
+
+          <div class="row">
+            <div class="col-6">
+              <h4>实验要求</h4>
+            </div>
+            <div class="col-6">
+              <h5 class="text-right"><span aria-hidden="true"></span> Jan 2007 - Dec 2008</h5>
+            </div>
+          </div>
+          <h5><span class="badge badge-secondary">Masters</span></h5>
+          <p th:text="${trial.getExpression()}"></p>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+
+          <h2>学习效率</h2>
+
+          <hr>
+
+          <div class="progress mt-4">
+            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%"> 实践</div>
+          </div>
+
+          <div class="progress mt-4">
+            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%"> 勤奋</div>
+          </div>
+
+          <div class="progress mt-4">
+            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%"> 专注</div>
+          </div>
+
+          <div class="progress mt-4">
+            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"> 坚持</div>
+          </div>
+
+          <div class="progress mt-4">
+            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" style="width: 55%"> 心态</div>
+          </div>
+
+          <div class="progress mt-4">
+            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%"> 虚心</div>
+          </div>
+
+          <div class="progress mt-4">
+            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%"> 总结</div>
+          </div>
+
+        </div>
+      </div>
+		
+      <hr>
+      <h2>Contact</h2>
+      <hr>
+		
+      <div class="container">
+        <div class="row justify-content-center">
+			
+          <div class="col-lg-8  col-12 jumbotron">
+			  
+            <form method="get" th:action="'http://localhost:8080' + ${#request.getContextPath()} + '/trial/startTrial/' + ${trial.getTrialNo()}">
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary">开始实验</button>
+              </div>
+            </form>
+			  
+          </div>
+			
+        </div>
+      </div>
+		
+      <hr>
+		
+      <footer class="text-center">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <p>Copyright © MyWebsite. All rights reserved.</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+		
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+         <script th:src="@{'/templates/js/jquery-3.3.1.min.js'}"></script>
+         <script th:src="@{'/templates/js/popper.min.js'}"></script>
+         <script th:src="@{'/templates/js/bootstrap-4.2.1.js'}"></script>
+         <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  </body>
+</html>

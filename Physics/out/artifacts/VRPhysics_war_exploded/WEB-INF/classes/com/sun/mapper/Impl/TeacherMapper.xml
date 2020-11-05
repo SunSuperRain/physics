@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sun.mapper.TeacherMapper">
+
+    <select id="login" parameterType="String" resultType="Teacher">
+        select * from teacher where userName = #{userName} and passWord = #{passWord};
+    </select>
+
+    <select id="queryByPaging" resultType="Teacher">
+        select * from teacher
+        <where>
+            <if test="teacherName != null">teacherName LIKE CONCAT('%',#{teacherName},'%'),</if>
+            <if test="phone != null">phone LIKE phone('%',#{phone},'%')</if>
+        </where>
+        limit #{startPos},#{endPos};
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from teacher
+        <where>
+            <if test="teacherName != null">teacherName LIKE CONCAT('%',#{teacherName},'%'),</if>
+            <if test="phone != null">phone LIKE phone('%',#{phone},'%')</if>
+        </where>
+    </select>
+
+
+    <update id="updateById" parameterType="teacher">
+        update teacher
+        <set>
+            <if test="userName != null">userName = #{userName},</if>
+            <if test="passWord != null">passWord = #{passWord},</if>
+            <if test="teacherName != null">teacherName = #{teacherName},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="age != null">age = #{age},</if>
+        </set>
+        where tId = #{tId};
+    </update>
+
+    <delete id="deleteById" parameterType="int">
+        delete from teacher where tId = #{tId};
+    </delete>
+
+    <insert id="addTeacher" parameterType="Teacher">
+        insert into teacher(userName,passWord,teacherName,sex,age,card,phone,email)
+        values(#{userName},#{passWord},#{teacherName},#{sex},#{age},1,#{phone},#{email});
+    </insert>
+
+    <select id="getRole" resultType="java.util.HashMap">
+        SELECT tId,role.* FROM teacher,role WHERE role.kind = #{card};
+    </select>
+
+    <select id="queryAllTeacher" parameterType="Teacher" resultType="Teacher">
+        select * from teacher where 1 = 1
+            <if test="teacherName != null">
+            and teacherName like CONCAT('%',#{teacherName},'%')
+            </if>
+            <if test="phone != null">
+            and phone like CONCAT('%',#{phone},'%')
+            </if>
+        ;
+    </select>
+
+    <select id="queryById" resultType="Teacher">
+        select * from teacher where tId = #{tId};
+    </select>
+
+    <!--批量删除的方法-->
+    <delete id="batchDelete">
+        delete from teacher where tId in
+        <foreach collection="tIds" item="tId" index="X" open="(" separator="," close=")">
+            #{tId}
+        </foreach>
+    </delete>
+
+    <!--根据id和密码获取教师信息-->
+    <select id="queryByPassWord" resultType="Teacher">
+        select * from teacher where tId = #{tId} and passWord = #{passWord};
+    </select>
+
+    <!--更新用户密码信息-->
+    <update id="updatePassWord" parameterType="Teacher">
+        update teacher
+        <set>
+            passWord = #{passWord}
+        </set>
+        where tId = #{tId};
+    </update>
+
+</mapper>

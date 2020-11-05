@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sun.mapper.StudentMapper">
+
+    <select id="login" parameterType="String" resultType="Student">
+        select * from student where userName = #{userName} and passWord = #{passWord};
+    </select>
+
+    <select id="queryByAllStudent" parameterType="Student">
+        select * from student;
+    </select>
+
+    <select id="queryByStuNo" parameterType="String" resultType="Student">
+        select * from  student where stuNo = #{stuNo};
+    </select>
+
+    <update id="updateStudent" parameterType="Student">
+        update student
+        <set>
+            <if test="userName!=null">userName=#{userName},</if>
+            <if test="passWord!=null">passWord=#{passWord},</if>
+            <if test="studentName!=null">studentName=#{studentName},</if>
+            <if test="age!=age">age=#{age},</if>
+            <if test="sex!=null">sex=#{sex},</if>
+            <if test="phone!=age">phone=#{phone},</if>
+            <if test="email!=null">email=#{email},</if>
+            <if test="classNo!=null">classNo=#{classNo},</if>
+            <if test="tId!=null">tId=#{tId},</if>
+        </set>
+        where stuNo = #{stuNo};
+    </update>
+
+    <delete id="deleteByStuNo" parameterType="String">
+        delete from student where stuNo = #{stuNo};
+    </delete>
+
+    <insert id="addStudent" parameterType="Student">
+        insert  into student(stuNo,userName,passWord,studentName,age,sex,classNo,tId,phone,email,card) values(#{stuNo},#{userName},#{passWord},#{studentName},#{age},#{sex},#{classNo},#{tId},#{phone},#{email},2);
+    </insert>
+
+    <select id="queryAllStudent" resultType="Student">
+        select * from student where 1 = 1
+        <if test="studentName != null"> and studentName like CONCAT('%',#{studentName},'%')</if>
+        <if test="phone != null"> and phone like CONCAT('%',#{phone},'%')</if>
+    </select>
+
+    <delete id="batchDelete">
+        delete from student where stuNo in
+        <foreach collection="stuNos" item="stuNo" open="(" separator="," close=")">
+            #(stuNo)
+        </foreach>
+        ;
+    </delete>
+
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sun.mapper.AdminMapper">
+
+    <select id="login" parameterType="String" resultType="Admin">
+        select * from admin where userName = #{userName} and passWord = #{passWord};
+    </select>
+
+    <select id="getByID" parameterType="int" resultType="Admin">
+        select * from admin where aId = #{aId};
+    </select>
+
+    <update id="updatePassWord" parameterType="Admin">
+        update admin
+        <set>
+            <if test="passWord != null">passWord = #{passWord}</if>
+        </set>
+        where aId = #{aId};
+    </update>
+
+    <select id="queryByPassWord" parameterType="Admin" resultType="Admin">
+        select * from admin where aId = #{aId} and passWord = #{passWord}
+    </select>
+
+    <update id="updateAdmin" parameterType="Admin">
+        update admin
+        <set>
+            <if test="adminName != null">adminName = #{adminName},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email}</if>
+        </set>
+        where aId = #{aId};
+    </update>
+
+    <select id="getRole" resultType="java.util.HashMap">
+        SELECT aId,role.* FROM admin,role WHERE role.kind = #{card};
+    </select>
+
+    <!--获取所有的管理员信息-->
+    <select id="getAllAdmin" resultType="Admin">
+        select * from admin;
+    </select>
+
+</mapper>

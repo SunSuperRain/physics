@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sun.mapper.VisionMapper">
+
+    <select id="getFirstVision" resultType="Vision">
+        select * from vision limit 0,4;
+    </select>
+
+    <select id="getLastVision" resultType="Vision">
+        select * from vision limit 4,4;
+    </select>
+
+    <select id="getAllVision" resultType="Vision">
+        select * from vision
+        <where>
+            <if test="visionName != null">visionName like CONCAT('%',#{visionName},'%')</if>
+        </where>
+        limit #{startPos},#{endPos}
+        ;
+    </select>
+
+    <select id="getAllCount" resultType="int">
+        select count(*) from vision
+        <where>
+            <if test="visionName != null">visionName like CONCAT('%',#{visionName},'%')</if>
+        </where>
+        ;
+    </select>
+
+    <select id="getVisionByID" resultType="Vision">
+        select * from vision where visionID = #{visionID};
+    </select>
+
+    <update id="updateVision" parameterType="Vision">
+        update vision
+        <set>
+            <if test="image != null">image = #{image},</if>
+            <if test="introduction != null">introduction = #{introduction},</if>
+            <if test="keyWord != null">keyWord = #{keyWord},</if>
+            <if test="visionLink != null">visionLink = #{visionLink},</if>
+            <if test="visionLink != null">visionName = #{visionName}</if>
+        </set>
+        where visionID = #{visionID};
+    </update>
+
+    <delete id="visionID" parameterType="int">
+        delete from vision where visionID = #{visionID};
+    </delete>
+
+    <insert id="addVision" parameterType="Vision">
+        insert into vision(image,introduction,keyWord,record,visionLink,visionLink)
+        values(#{image},#{introduction},#{keyWord},0,#{visionLink},#{visionLink});
+    </insert>
+
+    <select id="getAllVisions" resultType="Vision">
+        select * from vision where 1 = 1
+            <if test="visionName != null"> and visionName like CONCAT('%',#{visionName},'%')</if>
+            <if test="keyWord != null"> and keyWord like CONCAT('%',#{keyWord},'%')</if>
+    </select>
+
+</mapper>

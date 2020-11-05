@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>后台登录</title>
+	
+	<style>
+		div#div1{
+			position: fixed;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			z-index: -1;
+		}
+		
+		div#div1 > img{
+			height: 100%;
+			width: 100%;
+			border: 0;
+		}
+	</style>
+
+	<link rel="stylesheet" th:href="@{'/templates/css/layui.css'}"/>
+	<link rel="stylesheet" th:href="@{'/templates/css/login.css'}"/>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+	
+<div id="div1"><img th:src="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/image/background.jpg'" alt="图片"/></div>
+
+<div id="wrapper" class="login-page">
+
+<div id="login_form" class="form">
+
+<form class="register-form" action=""  method="post">
+<h2>用户注册</h2>
+	<input type="text" placeholder="用户名" value="" id="r_user_name" />
+	<input type="password" placeholder="密码" id="r_password" name="password" />
+	<input type="text" placeholder="电子邮件" id="r_emial" />
+	<button id="create">创建账户</button>
+	<p class="message">已经有了一个账户? <a href="#">立刻登录</a></p>
+</form>
+	
+<form id="myForm" class="login-form"  th:action="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/loginByRole'" method="post">
+
+	<img th:src="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/image/logo.jpg'" style="width: 100px;" /><h2>仿真物理实验平台登录</h2>
+
+	<input type="text" placeholder="用户名" value="" name="userName" id=""/>
+
+	<input type="password" placeholder="密码" id="passWord"  name="passWord"/>
+
+	<!--身份选项-->
+	<div class="layui-form-item">
+		<select name="card" lay-verify=""  style="height: 40px;width: 340px; background-color: rgba(242,242,242,1.00); border: 1px solid rgba(242,242,242,1.00);">
+			<option value="">请选择一个身份</option>
+			<option value="2">学生</option>
+			<option value="1">教师</option>
+			<option value="0">管理员</option>
+		</select>
+	</div>
+
+	<button onClick="document.getElementById('myForm').submit()">登　录</button>
+
+	<p class="message">还没有账户? <a href="#">立刻创建</a></p>
+
+	<div style="color: orangered;" th:text="${message}"></div>
+
+</form>
+
+</div>
+
+</div>
+
+<script th:src="@{'/templates/js/jquery-3.3.1.min.js'}"></script>
+	<script type="text/javascript">
+
+		if (self.location !== top.location) {
+			top.location = self.location;
+		}
+
+	function check_login()
+	{
+	 var name=$("#user_name").val();
+	 var pass=$("#password").val();
+	 if(name=="admin" && pass=="admin")
+	 {
+	  alert("登录成功！");
+	  $("#user_name").val("");
+	  $("#password").val("");
+       $(location).attr('href', 'index.html');
+	 }
+	 else
+	 {
+	  $("#login_form").removeClass('shake_effect');  
+	  setTimeout(function()
+	  {
+	   $("#login_form").addClass('shake_effect')
+	  },1);  
+	 }
+	}
+	function check_register(){
+		var name = $("#r_user_name").val();
+		var pass = $("#r_password").val();
+		var email = $("r_email").val();
+		if(name!="" && pass=="" && email != "")
+		 {
+		  alert("注册成功！");
+		  $("#user_name").val("");
+		  $("#password").val("");
+		 }
+		 else
+		 {
+		  $("#login_form").removeClass('shake_effect');  
+		  setTimeout(function()
+		  {
+		   $("#login_form").addClass('shake_effect')
+		  },1);  
+		 }
+	}
+	$(function(){
+		$("#create").click(function(){
+			check_register();
+			return false;
+		})
+		$("#login").click(function(){
+			check_login();
+			return false;
+		})
+		$('.message a').click(function () {
+		    $('form').animate({
+		        height: 'toggle',
+		        opacity: 'toggle'
+		    }, 'slow');
+		});
+	})
+	</script>
+</body>
+</html>

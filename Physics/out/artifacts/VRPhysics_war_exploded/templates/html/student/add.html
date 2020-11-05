@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>layuiAdmin 网站用户 iframe 框</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" th:href="@{'../templates/layuiadmin/layui/css/layui.css'}"/>
+  <link rel="stylesheet" th:href="@{'../templates/layuiadmin/style/admin.css'}"/>
+</head>
+<body>
+
+<form method="get" th:action="@{/student/addStudent}" id="form">
+
+  <div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin" style="padding: 20px 0 0 0;">
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">学号</label>
+      <div class="layui-input-inline">
+        <input type="text" name="stuNo" lay-verify="required" placeholder="学生学号" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">用户名</label>
+      <div class="layui-input-inline">
+        <input type="text" name="userName" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">密码</label>
+      <div class="layui-input-inline">
+        <input type="password" name="passWord" value="111111" readonly lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">(默认密码为6个1)
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">姓名</label>
+      <div class="layui-input-inline">
+        <input type="text" name="studentName" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">年龄</label>
+      <div class="layui-input-inline">
+        <input type="text" name="age" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">手机号码</label>
+      <div class="layui-input-inline">
+        <input type="text" name="phone" lay-verify="phone" placeholder="请输入号码" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">邮箱</label>
+      <div class="layui-input-inline">
+        <input type="text" name="email" lay-verify="email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+
+    <div class="layui-form-item" lay-filter="sex">
+      <label class="layui-form-label">选择性别</label>
+      <div class="layui-input-block">
+        <input type="radio" name="sex" value="男" title="男" checked>
+        <input type="radio" name="sex" value="女" title="女">
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <div class="layui-inline">
+        <label class="layui-form-label">搜索教师</label>
+        <div class="layui-input-inline" lay-filter="test">
+          <select name="tId" id="demo1" lay-verify="required" lay-search="">
+            <option value="">选中教师</option>
+            <div th:each="teacher : ${teacherList}">
+              <option th:text="${teacher.getTeacherName()}" th:value="${teacher.getTId()}"></option>
+            </div>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <div class="layui-inline">
+        <label class="layui-form-label">搜索班级</label>
+        <div class="layui-input-inline" lay-filter="test">
+          <select name="classNo" id="demo" lay-verify="required" lay-search="">
+            <option value="">选中班级</option>
+            <div th:each="class : ${classList}">
+              <option th:text="${class.getClassName()}" th:value="${class.getClassNo()}"></option>
+            </div>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="layui-form-item" style="margin-left: 330px;">
+      <button type="button" id="submitStudent" class="layui-btn" >立即提交</button>
+    </div>
+
+  </div>
+
+</form>
+
+  <script th:src="@{'../templates/layuiadmin/layui/layui.js'}"></script>
+  <script>
+
+    window.onload = function(){
+      //form表单的提交
+      document.getElementById("submitStudent").onclick = function () {
+        layer.msg("添加成功！", { icon: 1, offset: "auto", time:2000 });
+        //提交数据信息
+        const submit = document.getElementById("form")
+        submit.submit()
+    }
+    }
+
+    //取消对select的隐藏
+    layui.use('form', function(){
+      var form = layui.form;
+      form.render();
+    });
+
+  layui.config({
+    base: '../templates/layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'form', 'upload','layer'], function(){
+    var $ = layui.$
+    ,form = layui.form
+    ,upload = layui.upload
+    ,layer = layui.layer;
+
+    form.render();
+    
+    upload.render({
+      elem: '#layuiadmin-upload-useradmin'
+      ,url: layui.setter.base + 'json/upload/demo.js'
+      ,accept: 'images'
+      ,method: 'get'
+      ,acceptMime: 'image/*'
+      ,done: function(res){
+        $(this.item).prev("div").children("input").val(res.data.src)
+      }
+    });
+  })
+  </script>
+</body>
+</html>

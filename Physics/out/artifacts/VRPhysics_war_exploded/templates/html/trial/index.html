@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>仿真物理实验平台</title>
+    <!-- Bootstrap -->
+      <link rel="stylesheet" th:href="@{'../templates/css/simpleGridTemplate.css'}"/>
+      <link rel="stylesheet" th:href="@{'../templates/css/bootstrap-4.2.1.css'}"/>
+  </head>
+	
+  <body>
+	 <!--导航栏-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		
+      <a class="navbar-brand" href="#"><img alt="图片" th:src="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/image/logo.jpg'" width="50px" height="50px" /></a>
+		
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      		<span class="navbar-toggler-icon"></span>
+      </button>
+		
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item active">
+                <a class="nav-link" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/page/index'">首页 <span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/page/train'">实训项目</a>
+            </li>
+			
+		  <li class="nav-item">
+            <a class="nav-link" th:href="'http://localhost:8080'  + ${#request.getContextPath()} + '/vision/allVision'">教学课程</a>
+          </li>
+			
+		  <li class="nav-item">
+            <a class="nav-link" href="#">实验竞赛</a>
+          </li>
+			
+		  <li class="nav-item">
+            <a class="nav-link" th:href="'http://localhost:8080' + ${#request.getContextPath()} + '/essay/allEssay'">交流问答</a>
+          </li>
+			
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+			
+			<li class="nav-item dropdown">
+				
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${session.student.getStudentName()}">
+           <img alt="图片" th:src="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/image/head.jpg'" width="30px;" />
+            </a>
+				
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+              <a class="dropdown-item btn btn-primary" data-toggle="modal" data-target="#myModal" href="javascript:void(0);">个人信息</a>
+
+              <a class="dropdown-item" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/student/quit'">退出登录</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+				
+          </li>
+			
+        </ul>
+
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="实践课程/教学课程" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
+        </form>
+
+      </div>
+
+    </nav>
+
+	  <!--录播图部分-->
+    <section>
+      <div class="jumbotron text-center mt-2">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+				<!--添加轮播图代码-->
+				<div id="demo" class="carousel slide" data-ride="carousel">
+ 
+  				<!-- 指示符 -->
+  				<ul class="carousel-indicators">
+    				<li data-target="#demo" data-slide-to="0" class="active"></li>
+    				<li data-target="#demo" data-slide-to="1"></li>
+    				<li data-target="#demo" data-slide-to="2"></li>
+  				</ul>
+ 
+  				<!-- 轮播图片 -->
+  				<div class="carousel-inner">
+    				<div class="carousel-item active">
+						<a href="#"><img src="https://static.runoob.com/images/mix/img_fjords_wide.jpg" alt="图片"/></a>
+    				</div>
+					
+    				<div class="carousel-item">
+						<a href="#" alt="图片"><img src="https://static.runoob.com/images/mix/img_nature_wide.jpg"/></a>
+    				</div>
+					
+    				<div class="carousel-item">
+						<a href="#" alt="图片"><img src="https://static.runoob.com/images/mix/img_mountains_wide.jpg"/></a>
+    				</div>
+  				</div>
+ 
+  <!-- 左右切换按钮 -->
+  				<a class="carousel-control-prev" href="#demo" data-slide="prev">
+    				<span class="carousel-control-prev-icon"></span>
+  				</a>
+  				<a class="carousel-control-next" href="#demo" data-slide="next">
+    				<span class="carousel-control-next-icon"></span>
+  				</a>
+ 
+			</div>
+           </div>
+          </div>
+        </div>
+      </div>
+    </section>
+	  
+    <section>
+		
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h2>实 践 课 程</h2>
+            <p>TRAINING COURSE</p>
+          </div>
+		 </div>
+		  
+	  </div>
+		
+	</section>
+
+     <div class="container">
+         <div class="row mt-2">
+             <div class="col-md-3 col-6 mt-md-0 mt-1" style="float: left;"></div>
+             <div class="col-md-3 col-6 mt-md-0 mt-1" style="float: left;"></div>
+             <div class="col-md-3 col-6 mt-md-0 mt-1" style="float: left;"></div>
+             <div class="col-md-3 col-6 mt-md-0 mt-1" style="float: left;"><div style="width: 60px; float: right;"><a th:href="'http://localhost:8080' + ${#request.getContextPath()} + '/' + 'trial/allList'" style="color: black;">更多-></a></div></div>
+         </div>
+     </div>
+	  
+    <section>
+
+        <!--利用循环遍历-->
+      <div class="container">
+
+        <div class="row mt-2">
+
+            <div class="thumbnail" th:each="first : ${firstList}">
+                <a th:href="'http://localhost:8080' + ${#request.getContextPath()} + '/trial/getByNo/' + ${first.getTrialNo()}">
+                    <img th:src="'http://localhost:8080' + ${#request.getContextPath()} + '/templates/image/trial.gif'" alt="" width="2000" class="cards"/>
+                </a>
+                <h4 th:text="${first.getTrialName()}"></h4>
+                <p class="tag" th:text="${first.getKeyWord()}"></p>
+                <p class="text_column" th:text="${first.getCounts()}"></p>
+            </div>
+
+        </div>
+
+          <!--分隔符-->
+          <hr>
+
+        <div class="row">
+
+            <div class="thumbnail" th:each="last : ${lastList}">
+                <a th:href="'http://localhost:8080' + ${#request.getContextPath()} + '/trial/getByNo/' + ${last.getTrialNo()}">
+                    <img th:src="'http://localhost:8080' + ${#request.getContextPath()} + '/templates/image/trial.gif'" alt="" width="2000" class="cards"/>
+                </a>
+                <h4 th:text="${last.getTrialName()}"></h4>
+                <p class="tag" th:text="${last.getKeyWord()}"></p>
+                <p class="text_column" th:text="${last.getCounts()}"></p>
+            </div>
+
+        </div>
+		  
+      </div>
+		
+    </section>
+	  
+	  	<!--分隔符-->
+
+     <!--标题部分-->
+	<section>
+		
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center" style="padding: 30px 0px 0px 0px;">
+            <h2>视 频 课 程</h2>
+            <p>VISION COURSE</p>
+          </div>
+        </div>
+      </div>
+		
+    </section>
+
+     <!--图片部分-->
+
+     <div class="container">
+         <div class="row mt-2">
+             <div class="col-md-3 col-6 mt-md-0 mt-1" style="float: left;"></div>
+             <div class="col-md-3 col-6 mt-md-0 mt-1" style="float: left;"></div>
+             <div class="col-md-3 col-6 mt-md-0 mt-1" style="float: left;"></div>
+             <div class="col-md-3 col-6 mt-md-0 mt-1" style="float: left;"><div style="width: 60px; float: right;"><a th:href="'http://localhost:8080' + ${#request.getContextPath()} + '/' + 'vision/allVision'" style="color: black;">更多-></a></div></div>
+         </div>
+     </div>
+
+	<section>
+		
+      <div class="container">
+		  
+        <div class="row mt-2">
+
+            <div class="thumbnail" th:each="first : ${firstVision}">
+                <a th:href="'http://localhost:8080' + ${#request.getContextPath()} + '/vision/show/' + ${first.getVisionID()}">
+                    <img th:src="'http://localhost:8080' + ${#request.getContextPath()} + '/templates/image/vision.gif'" alt="" width="2000" class="cards"/>
+                </a>
+                <h4 th:text="${first.getVisionName()}"></h4>
+                <p class="tag" th:text="${first.getKeyWord()}"></p>
+                <p class="text_column" th:text="${first.getRecord()}"></p>
+            </div>
+
+        </div>
+		  
+		  <!--分隔符-->
+        <hr>
+		  
+        <div class="row">
+
+            <div class="thumbnail" th:each="last : ${lastVision}">
+                <a th:href="'http://localhost:8080' + ${#request.getContextPath()} + '/vision/show/' + ${last.getVisionID()}">
+                    <img th:src="'http://localhost:8080' + ${#request.getContextPath()} + '/templates/image/vision.gif'" alt="" width="2000" class="cards"/>
+                </a>
+                <h4 th:text="${last.getVisionName()}"></h4>
+                <p class="tag" th:text="${last.getKeyWord()}"></p>
+                <p class="text_column" th:text="${last.getRecord()}"></p>
+            </div>
+
+        </div>
+		  
+      </div>
+		
+    </section>
+	  
+	   <!--分隔符-->
+
+     <hr>
+
+     <div class="copyright">&copy;2020 - <strong>VRPhysics</strong></div>
+	  
+<!--    <footer class="text-center">
+      <div class="container">
+        <div class="row">
+			
+          <div class="col-12">
+            <p style="padding-top: 8px;">Copyright © VRPhysics. All rights reserved.</p>
+          </div>
+			
+        </div>
+      </div>
+    </footer>-->
+
+     <!-- 按钮触发模态框 -->
+     <!-- 模态框（Modal） -->
+     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h4 class="modal-title" id="myModalLabel">用 户 信 息</h4>
+                 </div>
+
+                 <div class="input-group mb-3">
+                     <div class="input-group-prepend">
+                         <span class="input-group-text" id="basic-addon1">学号</span>
+                     </div>
+                     <input type="text" class="form-control" th:value="${session.student.getStuNo()}" readonly aria-label="Username" aria-describedby="basic-addon1">
+                 </div>
+
+                 <div class="input-group mb-3">
+                     <div class="input-group-prepend">
+                         <span class="input-group-text" id="basic-addon2">用户名</span>
+                     </div>
+                     <input type="text" class="form-control" th:value="${session.student.getUserName()}" readonly aria-label="Username" aria-describedby="basic-addon2">
+                 </div>
+
+                 <div class="input-group mb-3">
+                     <div class="input-group-prepend">
+                         <span class="input-group-text" id="basic-addon3">姓名</span>
+                     </div>
+                     <input type="text" class="form-control" th:value="${session.student.getStudentName()}" readonly aria-label="Username" aria-describedby="basic-addon3">
+                 </div>
+
+
+                 <div class="input-group mb-3">
+                     <div class="input-group-prepend">
+                         <span class="input-group-text" id="basic-addon4">年龄</span>
+                     </div>
+                     <input type="text" class="form-control" th:value="${session.student.getAge()}" readonly aria-label="Username" aria-describedby="basic-addon5">
+                 </div>
+
+                 <div class="input-group mb-3">
+                     <div class="input-group-prepend">
+                         <span class="input-group-text" id="basic-addon5">性别</span>
+                     </div>
+                     <input type="text" class="form-control" th:value="${session.student.getSex()}" readonly aria-label="Username" aria-describedby="basic-addon5">
+                 </div>
+
+                 <div class="input-group mb-3">
+                     <div class="input-group-prepend">
+                         <span class="input-group-text" id="basic-addon6">班级号</span>
+                     </div>
+                     <input type="text" class="form-control" th:value="${session.student.getClassNo()}" readonly aria-label="Username" aria-describedby="basic-addon6">
+                 </div>
+
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                 </div>
+
+             </div><!-- /.modal-content -->
+         </div><!-- /.modal -->
+     </div>
+	  
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+     <script th:src="@{'/templates/js/jquery-3.3.1.min.js'}"></script>
+     <script th:src="@{'/templates/js/popper.min.js'}"></script>
+     <script th:src="@{'/templates/js/bootstrap-4.2.1.js'}"></script>
+     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  </body>
+</html>

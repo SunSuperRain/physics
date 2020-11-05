@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTDConfig3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--核心配置文件-->
+<configuration>
+
+    <!--配置数据源，交给spring去做-->
+        <settings>
+            <setting name="logImpl" value="STDOUT_LOGGING" />
+        </settings>
+
+    <!--取别名-->
+    <typeAliases>
+        <package name="com.sun.entity"/>
+    </typeAliases>
+
+    <!--将mapper进行绑定-->
+    <mappers>
+        <mapper resource="com/sun/mapper/Impl/StudentMapper.xml"/>
+        <mapper resource="com/sun/mapper/Impl/TrialMapper.xml" />
+        <mapper resource="com/sun/mapper/Impl/EssayMapper.xml"/>
+        <mapper resource="com/sun/mapper/Impl/ReplyMapper.xml"/>
+        <mapper resource="com/sun/mapper/Impl/GreatMapper.xml"/>
+        <mapper resource="com/sun/mapper/Impl/VisionMapper.xml"/>
+        <mapper resource="com/sun/mapper/Impl/AdminMapper.xml"/>
+        <mapper resource="com/sun/mapper/Impl/TeacherMapper.xml"/>
+        <mapper resource="com/sun/mapper/Impl/ClassMapper.xml"/>
+        <mapper resource="com/sun/mapper/Impl/RoleMapper.xml"/>
+        <mapper resource="com/sun/mapper/Impl/BoardMapper.xml"/>
+    </mappers>
+
+</configuration>

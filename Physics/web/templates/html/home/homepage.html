@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>VRPhysics 主页示例展示</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" th:href="@{'../templates/layuiadmin/layui/css/layui.css'}"/>
+  <link rel="stylesheet" th:href="@{'../templates/layuiadmin/style/admin.css'}"/>
+</head>
+<body>
+
+  <div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+      
+      <div class="layui-col-sm6 layui-col-md3">
+        <div class="layui-card">
+          <div class="layui-card-header">
+            访问量
+            <span class="layui-badge layui-bg-blue layuiadmin-badge">SUM</span>
+          </div>
+
+          <div class="layui-card-body layuiadmin-card-list">
+            <p class="layuiadmin-big-font" th:text="${trialCounts}"></p>
+            <p>
+              总计访问量 
+              <span class="layuiadmin-span-color">88 <i class="layui-inline layui-icon layui-icon-flag"></i></span>
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="layui-col-sm6 layui-col-md3">
+
+        <div class="layui-card">
+          <div class="layui-card-header">
+            管理员数目
+            <span class="layui-badge layui-bg-cyan layuiadmin-badge">ADMIN</span>
+          </div>
+
+          <div class="layui-card-body layuiadmin-card-list">
+            <p class="layuiadmin-big-font" th:text="${adminCounts}"></p>
+            <p>
+              新下载 
+              <span class="layuiadmin-span-color">10% <i class="layui-inline layui-icon layui-icon-face-smile-b"></i></span>
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="layui-col-sm6 layui-col-md3">
+        <div class="layui-card">
+          <div class="layui-card-header">
+            教师人数
+            <span class="layui-badge layui-bg-green layuiadmin-badge">TEACHER</span>
+          </div>
+          <div class="layui-card-body layuiadmin-card-list">
+
+            <p class="layuiadmin-big-font" th:text="${teacherCounts}"></p>
+            <p>
+              总收入 
+              <span class="layuiadmin-span-color">*** <i class="layui-inline layui-icon layui-icon-dollar"></i></span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="layui-col-sm6 layui-col-md3">
+        <div class="layui-card">
+          <div class="layui-card-header">
+            学生人数
+            <span class="layui-badge layui-bg-orange layuiadmin-badge">STUDENT</span>
+          </div>
+          <div class="layui-card-body layuiadmin-card-list">
+
+            <p class="layuiadmin-big-font" th:text="${studentCounts}"></p>
+            <p>
+              最近一个月 
+              <span class="layuiadmin-span-color">15% <i class="layui-inline layui-icon layui-icon-user"></i></span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="layui-col-sm6 layui-col-md3">
+        <div class="layui-card">
+          <div class="layui-card-header">
+            班级人数
+            <span class="layui-badge layui-bg-blue layuiadmin-badge">CLASS</span>
+          </div>
+          <div class="layui-card-body layuiadmin-card-list">
+
+            <p class="layuiadmin-big-font" th:text="${classCounts}"></p>
+            <p>
+              最近一个月
+              <span class="layuiadmin-span-color">15% <i class="layui-inline layui-icon layui-icon-user"></i></span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="layui-col-sm6 layui-col-md3">
+        <div class="layui-card">
+          <div class="layui-card-header">
+            实验数量
+            <span class="layui-badge layui-bg-red layuiadmin-badge">TRIAL</span>
+          </div>
+          <div class="layui-card-body layuiadmin-card-list">
+
+            <p class="layuiadmin-big-font" th:text="${trialTotal}"></p>
+            <p>
+              最近一个月
+              <span class="layuiadmin-span-color">15% <i class="layui-inline layui-icon layui-icon-user"></i></span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="layui-col-sm6 layui-col-md3">
+        <div class="layui-card">
+          <div class="layui-card-header">
+            视频数量
+            <span class="layui-badge layui-bg-cyan layuiadmin-badge">VISION</span>
+          </div>
+          <div class="layui-card-body layuiadmin-card-list">
+
+            <p class="layuiadmin-big-font" th:text="${visionCounts}"></p>
+            <p>
+              最近一个月
+              <span class="layuiadmin-span-color">15% <i class="layui-inline layui-icon layui-icon-user"></i></span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+        
+      </div>
+    </div>
+  </div>
+
+  <script th:src="@{'/templates/layuiadmin/layui/layui.js'}"></script>
+  <script>
+  layui.config({
+    base: '../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'sample']);
+  </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | Physics</title>
+<!--    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">-->
+
+    <link rel="stylesheet" type="text/css" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/html/Physics/TemplateData/style.css'">
+    <link rel="stylesheet" type="text/css" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/html/Physics/TemplateData/favicon.ico'">
+
+    <script th:src="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/html/Physics/TemplateData/UnityProgress.js'"></script>
+    <script th:src="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/html/Physics/Build/UnityLoader.js'"></script>
+<!--    <script src="TemplateData/UnityProgress.js"></script>
+    <script src="Build/UnityLoader.js"></script>-->
+    <script>
+      var unityInstance = UnityLoader.instantiate("unityContainer", "http://localhost:8080/VRPhysics/templates/html/Physics/Build/Physics.json", {onProgress: UnityProgress});
+    </script>
+  </head>
+  <body>
+    <div class="webgl-content">
+      <div id="unityContainer" style="width: 1920px; height: 1080px"></div>
+      <div class="footer">
+        <div class="webgl-logo"></div>
+        <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
+        <div class="title">Physics</div>
+      </div>
+    </div>
+  </body>
+</html>

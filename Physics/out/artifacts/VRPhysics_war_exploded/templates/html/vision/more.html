@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>查询实验页面</title>
+  <link th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/css/simpleGridTemplate.css'" rel="stylesheet">
+  <link th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/css/bootstrap-4.2.1.css'" rel="stylesheet">
+</head>
+<body>
+
+<!--导航栏-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+  <a class="navbar-brand" href="#"><img alt="图片" th:src="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/image/logo.jpg'" width="50px" height="50px" /></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item">
+        <a class="nav-link" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/page/index'">首页 <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/page/train'">实训项目</a>
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" th:href="'http://localhost:8080'  + ${#request.getContextPath()} + '/vision/allVision'">教学课程</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="#">实验竞赛</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" th:href="'http://localhost:8080' + ${#request.getContextPath()} + '/essay/allEssay'">交流问答</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+
+      <li class="nav-item dropdown">
+
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${session.student.getStudentName()}">
+          <img alt="图片" th:src="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/image/head.jpg'" width="30px;" />
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+          <a class="dropdown-item btn btn-primary" data-toggle="modal" data-target="#myModal" href="javascript:void(0);">个人信息</a>
+
+          <a class="dropdown-item" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/student/quit'">退出登录</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+
+      </li>
+
+    </ul>
+
+    <form class="form-inline my-2 my-lg-0" method="post" th:action="'http://localhost:8080' + ${#request.getContextPath()} + '/vision/allVision'">
+      <input class="form-control mr-sm-2" type="search" placeholder="教学课程" name="visionName" th:value="${visionName}" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
+    </form>
+
+  </div>
+
+</nav>
+	
+<!-- Main Container -->
+<div class="container"> 
+  <!-- Header -->
+  <header class="header">
+    <h4 class="logo">物理实验视频</h4>
+  </header>
+  <!-- Hero Section -->
+  <section class="intro">
+    <div class="column">
+      <h3>JOHN DOE</h3>
+      <img th:src="'http://localhost:8080' + ${#request.getContextPath()} + '/templates/image/logo.jpg'" alt="图片" class="profile"> </div>
+    <div class="column">
+      <p>在初中物理教学中，新课改明确要求要注重培养学生的实验操作能力以及物理知识的运用能力。随着多媒体技术在初中物理教学中的广泛应用，为培养学生实验操作能力提供了契机。
+	  </p>
+      <p>在物理实验视频教学中，要求学生快速进入实验操作状态，这就需要教师对学生进行引导。微视频的应用，使实验课堂导人方法得到了丰富，引导学生思维从课堂学习过渡到实验操作。
+	  </p>
+    </div>
+  </section>
+	
+  <!-- Stats Gallery Section -->
+  <div class="gallery">
+
+    <div class="thumbnail" th:each="vision : ${pageList.getList()}">
+      <a th:href="'http://localhost:8080' + ${#request.getContextPath()} + '/vision/show/' + ${vision.getVisionID()}">
+        <img th:src="'http://localhost:8080' + ${#request.getContextPath()} + '/templates/image/vision.gif'" alt="" width="2000" class="cards"/>
+      </a>
+      <h4 th:text="${vision.getVisionName()}"></h4>
+      <p class="tag" th:text="${vision.getKeyWord()}">HTML, CSS, JS, WordPress</p>
+      <p class="text_column" th:text="${vision.getRecord()}"></p>
+    </div>
+
+  </div>
+
+  <!--分页显示-->
+  <nav aria-label="Page navigation example" style="margin-bottom: 10px;" class="container">
+    <ul class="pagination container-fluid" style="width: 500px; margin: 0 auto;">
+
+      <li class="page-item">
+        <a class="page-link" href="javascript:void(0);" th:if="${pageList.isFirstPage} == true" style="pointer-events:none;" th:onclick="'javascript:go('+ ${pageList.prePage} + ')'">Previous</a>
+        <a class="page-link" href="javascript:void(0);" th:if="${pageList.isFirstPage} == false" th:onclick="'javascript:go('+ ${pageList.prePage} + ')'">Previous</a>
+      </li>
+
+      <li class="page-item" th:each="page : ${#numbers.sequence(1,pageList.getTotalPage())}">
+          <a class="page-link" href="javascript:void(0);" th:onclick="'javascript:go('+ ${page} +')'" th:text="${page}"></a>
+      </li>
+
+      <li class="page-item">
+        <a class="page-link" href="javascript:void(0);" th:if="${pageList.isLastPage} == true" style="pointer-events:none;" th:onclick="'javascript:go('+ ${pageList.nextPage} +')'">Next</a>
+        <a class="page-link" href="javascript:void(0);" th:if="${pageList.isLastPage} == false" th:onclick="'javascript:go('+ ${pageList.nextPage} +')'">Next</a>
+      </li>
+
+      <li class="page-item">
+        <div style="float: left; margin-left: 10px; margin-top: 5px; color:rgba(0,123,255);">
+          当前页数：<p style="display: inline;" th:text="${pageList.pageNo}"></p>
+        </div>
+      </li>
+
+    </ul>
+  </nav>
+
+  <!-- 按钮触发模态框 -->
+  <!-- 模态框（Modal） -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">用 户 信 息</h4>
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">学号</span>
+          </div>
+          <input type="text" class="form-control" th:value="${session.student.getStuNo()}" readonly aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon2">用户名</span>
+          </div>
+          <input type="text" class="form-control" th:value="${session.student.getUserName()}" readonly aria-label="Username" aria-describedby="basic-addon2">
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon3">姓名</span>
+          </div>
+          <input type="text" class="form-control" th:value="${session.student.getStudentName()}" readonly aria-label="Username" aria-describedby="basic-addon3">
+        </div>
+
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon4">年龄</span>
+          </div>
+          <input type="text" class="form-control" th:value="${session.student.getAge()}" readonly aria-label="Username" aria-describedby="basic-addon5">
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon5">性别</span>
+          </div>
+          <input type="text" class="form-control" th:value="${session.student.getSex()}" readonly aria-label="Username" aria-describedby="basic-addon5">
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon6">班级号</span>
+          </div>
+          <input type="text" class="form-control" th:value="${session.student.getClassNo()}" readonly aria-label="Username" aria-describedby="basic-addon6">
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        </div>
+
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+  </div>
+	
+  <!-- Copyrights Section -->
+  <hr>
+
+  <div class="copyright">&copy;2020 - <strong>VRPhysics</strong></div>
+<!--  <div class="copyright">&copy;2020 - <strong>VRPhysics</strong></div>-->
+</div>
+<!-- Main Container Ends -->
+<script th:src="@{'/templates/js/jquery-3.3.1.min.js'}"></script>
+<script th:src="@{'/templates/js/popper.min.js'}"></script>
+<script th:src="@{'/templates/js/bootstrap-4.2.1.js'}"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+</body>
+
+<!--利用jQuery实现分页效果-->
+<script type="text/javascript" th:inline="javascript">
+
+  function go(pageNo) {
+    //将用户查询的关键字拼接到跳转页面的后面
+    var str = "";
+    if(null != [[${visionName}]]){
+      str += [[${visionName}]];
+    }
+    //跳转到后端分析
+    window.location.href = 'http://localhost:8080' + [[${#request.getContextPath()}]] + '/vision/allVision?pageNo=' + pageNo + '&' + 'visionName=' + str;
+  }
+
+</script>
+
+</html>

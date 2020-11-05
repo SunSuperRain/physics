@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--扫描service下的包-->
+    <context:component-scan base-package="com.sun.service"/>
+
+    <!--2、将我们的所有业务类，注入到Spring中-->
+    <bean id="StudentServiceImpl" class="com.sun.service.Impl.StudentServiceImpl">
+        <property name="studentMapper" ref="studentMapper"/>
+    </bean>
+
+    <bean id="TrialServiceImpl" class="com.sun.service.Impl.TrialServiceImpl">
+        <property name="trialMapper" ref="trialMapper"/>
+    </bean>
+
+    <bean id="EssayServiceImpl" class="com.sun.service.Impl.EssayServiceImpl">
+        <property name="essayMapper" ref="essayMapper"/>
+    </bean>
+
+    <bean id="ReplyServiceImpl" class="com.sun.service.Impl.ReplyServiceImpl">
+        <property name="replyMapper" ref="replyMapper"/>
+    </bean>
+
+    <bean id="GreatServiceImpl" class="com.sun.service.Impl.GreatServiceImpl">
+        <property name="greatMapper" ref="greatMapper"/>
+    </bean>
+
+    <bean id="VisionServiceImpl" class="com.sun.service.Impl.VisionServiceImpl">
+        <property name="visionMapper" ref="visionMapper"/>
+    </bean>
+
+    <bean id="AdminServiceImpl" class="com.sun.service.Impl.AdminServiceImpl">
+        <property name="adminMapper" ref="adminMapper"/>
+    </bean>
+
+    <bean id="TeacherServiceImpl" class="com.sun.service.Impl.TeacherServiceImpl">
+        <property name="teacherMapper" ref="teacherMapper"/>
+    </bean>
+
+    <bean id="ClassServiceImpl" class="com.sun.service.Impl.ClassServiceImpl">
+        <property name="classMapper" ref="classMapper"/>
+    </bean>
+
+    <bean id="RoleServiceImpl" class="com.sun.service.Impl.RoleServiceImpl">
+        <property name="roleMapper" ref="roleMapper"/>
+    </bean>
+
+    <bean id="BoardServiceImpl" class="com.sun.service.Impl.BoardServiceImpl">
+        <property name="boardMapper" ref="boardMapper"/>
+    </bean>
+
+    <bean id="GreatServiceImpl1" class="com.sun.entity.Great"/>
+
+    <!--声明式事务-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--注入数据源-->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+</beans>

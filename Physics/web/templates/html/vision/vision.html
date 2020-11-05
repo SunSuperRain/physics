@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>视频教程</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" th:href="@{'/templates/css/simpleGridTemplate.css'}"/>
+    <link rel="stylesheet" th:href="@{'/templates/css/bootstrap-4.2.1.css'}"/>
+  </head>
+  <body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <a class="navbar-brand" href="#"><img alt="图片" th:src="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/image/logo.jpg'" width="50px" height="50px" /></a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item active">
+          <a class="nav-link" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/page/index'">首页 <span class="sr-only">(current)</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/page/train'">实训项目</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" th:href="'http://localhost:8080'  + ${#request.getContextPath()} + '/vision/allVision'">教学课程</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">实验竞赛</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" th:href="'http://localhost:8080' + ${#request.getContextPath()} + '/essay/allEssay'">交流问答</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${session.student.getStudentName()}">
+            <img alt="图片" th:src="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/templates/image/head.jpg'" width="30px;" />
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+            <a class="dropdown-item btn btn-primary" data-toggle="modal" data-target="#myModal" href="javascript:void(0);">个人信息</a>
+
+            <a class="dropdown-item" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + '/student/quit'">退出登录</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+
+        </li>
+
+      </ul>
+
+    </div>
+
+  </nav>
+
+    <hr>
+
+    <section>
+      <h2 class="text-center" th:text="${vision.getVisionName()}"></h2>
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="embed-responsive embed-responsive-16by9">
+
+              <video autoplay controls="controls">
+                <resource th:src="@{/templates/vedio/show.odd}"/>
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+	  
+    <hr>
+
+    <div class="container">
+
+      <div class="row">
+		  
+        <div class="col-lg-4 col-md-6 col-12">
+          <h2>注 意 事 项</h2>
+          <ul class="list-unstyled">
+
+            <li class="media">
+              <div class="media-body">
+                <h5 class="mt-0 mb-1">事项 1</h5>
+                <p class="mb-0">视频中演示的实验内容均为现实生活中的现实，实验内容符合自然现象，视频清晰度可能不够，如有影响用户体验感，请及时联系管理员，谢谢谅解！</p>
+                <p>P:xxx-xxxx-xxxx</p>
+              </div>
+            </li>
+
+            <li class="media my-4">
+              <div class="media-body">
+                <h5 class="mt-0 mb-1">事项 2</h5>
+                <p class="mb-0">视频属于管理员上传资源信息，并不是软件开发者个人所有，视频仅作为教学用途，视频内容健康.</p>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-sm-6 mb-md-0 mb-2">
+          <h2>视 频 重 点</h2>
+          <address>
+            <strong th:text="${vision.getKeyWord()}"></strong><br>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas, voluptates, soluta velit nostrum ut iste exercitationem vitae ipsum repellendus laudantium ab possimus nemo odio cumque illum nulla laborum blanditiis unde.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas, voluptates, soluta velit nostrum ut iste exercitationem vitae ipsum repellendus laudantium ab possimus nemo odio cumque illum nulla laborum blanditiis unde.</p>
+          </address>
+        </div>
+		  
+        <div class="col-lg-4 col-12">
+          <h2>关 于 我 们</h2>
+          <p>在目前的软件市场上并没有一款操作方便、系统管理实验、所占空间较小的一款程序，面向基础教育更是如此；对于基础教育的多媒体设备不算良好，因此占存空间和操作便捷就显得尤为重要了，目前许多的初、高中学校并没有配备相应的软件</p>
+          <p>本项目依托软件开发创客实验室开展研究，既具有理论支撑又有技术指导。目前实验室针对学生开展了Web技术开发三阶段素质提升计划，为同学们在软件开发与应用方面提供坚实基础。实验室在软硬结合方面获得的国家发明专利、软件著作权等知识产权成果为项目顺利进行研究、实施奠定了良好基础</p>
+        </div>
+		  
+      </div>
+    </div>
+	  
+  <hr>
+
+  <!-- 按钮触发模态框 -->
+  <!-- 模态框（Modal） -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">用 户 信 息</h4>
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">学号</span>
+          </div>
+          <input type="text" class="form-control" th:value="${session.student.getStuNo()}" readonly aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon2">用户名</span>
+          </div>
+          <input type="text" class="form-control" th:value="${session.student.getUserName()}" readonly aria-label="Username" aria-describedby="basic-addon2">
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon3">姓名</span>
+          </div>
+          <input type="text" class="form-control" th:value="${session.student.getStudentName()}" readonly aria-label="Username" aria-describedby="basic-addon3">
+        </div>
+
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon4">年龄</span>
+          </div>
+          <input type="text" class="form-control" th:value="${session.student.getAge()}" readonly aria-label="Username" aria-describedby="basic-addon5">
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon5">性别</span>
+          </div>
+          <input type="text" class="form-control" th:value="${session.student.getSex()}" readonly aria-label="Username" aria-describedby="basic-addon5">
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon6">班级号</span>
+          </div>
+          <input type="text" class="form-control" th:value="${session.student.getClassNo()}" readonly aria-label="Username" aria-describedby="basic-addon6">
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        </div>
+
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+  </div>
+
+  <div class="copyright">
+    &copy;2020 - <strong>VRPhysics</strong>
+  </div>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script th:src="@{'/templates/js/jquery-3.3.1.min.js'}"></script>
+  <script th:src="@{'/templates/js/popper.min.js'}"></script>
+  <script th:src="@{'/templates/js/bootstrap-4.2.1.js'}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+  </body>
+</html>

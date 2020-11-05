@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sun.mapper.ClassMapper">
+
+    <select id="queryByPaging" resultType="ClassRoom">
+        select * from classroom
+        <where>
+            <if test="className != null">className like CONCAT('%',#{className},'%')</if>
+        </where>
+        limit #{startPos},#{endPos};
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from classroom
+        <where>
+            <if test="className != null">className like CONCAT('%',#{className},'%')</if>
+        </where>
+    </select>
+    
+    <update id="updateById" parameterType="ClassRoom">
+        update classroom
+        <set>
+            <if test="className != null">className = #{className},</if>
+            <if test="currentTotal != null">currentTotal = #{currentTotal},</if>
+            <if test="maxTotal != null">maxTotal = #{maxTotal}</if>
+        </set>
+        where classNo = #{classNo};
+    </update>
+
+    <delete id="deleteById" parameterType="int">
+        delete from classroom where classNo = #{classNo};
+    </delete>
+
+    <insert id="addClassRoom" parameterType="ClassRoom">
+        insert into classroom(className,currentTotal,maxTotal) values(#{className},0,#{maxTotal});
+    </insert>
+
+    <select id="getAllClassRoom" resultType="ClassRoom">
+        select * from classRoom
+        <where>
+            <if test="className != null">className like CONCAT('%',#{className},'%')</if>
+        </where>
+        ;
+    </select>
+
+    <!--根据班级号获取班级信息-->
+    <select id="queryByClassNo" resultType="ClassRoom">
+        select * from classRoom where classNo = #{classNo} and maxTotal >= currentTotal;
+    </select>
+
+</mapper>

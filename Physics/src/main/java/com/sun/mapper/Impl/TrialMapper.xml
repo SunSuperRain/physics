@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sun.mapper.TrialMapper">
+
+    <select id="getAllTrial" resultType="Trial">
+        select * from trial
+        <where>
+            <if test="trialName != null">trialName LIKE CONCAT('%',#{trialName},'%')</if>
+        </where>
+        limit #{startPos},#{endPos};
+        ;
+    </select>
+
+    <select id="getFirstTrial" resultType="Trial">
+        select * from trial limit 0,4;
+    </select>
+    
+    <select id="getLastTrial" resultType="Trial">
+        select * from  trial limit 4,4;
+    </select>
+
+    <select id="getByNo" resultType="Trial" parameterType="int">
+        select * from trial where trialNo = #{trialNo};
+    </select>
+
+    <update id="addCountByNo" parameterType="int">
+        update trial
+        <set>counts = #{counts}</set>
+        where trialNo = #{trialNo};
+    </update>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from trial;
+    </select>
+
+    <select id="queryByName" resultType="Trial">
+        SELECT * FROM trial WHERE trialName LIKE CONCAT('%',#{trialName},'%');
+    </select>
+
+    <select id="getCountByTrialName" resultType="int">
+        select count(*) from trial
+        <where>
+            <if test="trialName != null">trialName LIKE CONCAT('%',#{trialName},'%')</if>
+        </where>
+        ;
+    </select>
+    
+    <update id="updateTrial" parameterType="Trial">
+        update trial
+        <set>
+            <if test="image != null">image = #{image},</if>
+            <if test="introduction != null">introduction = #{introduction},</if>
+            <if test="expression != null">expression = #{expression},</if>
+            <if test="skill != null">skill = #{skill},</if>
+            <if test="tId != null">tId = #{tId},</if>
+            <if test="figure != null">figure = #{figure},</if>
+            <if test="figureName != null">figureName = #{figureName},</if>
+            <if test="figureIntroduction != null">figureIntroduction = #{figureIntroduction},</if>
+            <if test="trialName != trialName">trialName = #{trialName},</if>
+            <if test="keyWord != null">keyWord = #{keyWord},</if>
+        </set>
+    </update>
+
+    <delete id="deleteTrial" parameterType="Trial">
+        delete from trial where trialNo = #{trialNo};
+    </delete>
+
+    <insert id="addTrial" parameterType="Trial">
+        insert into trial(image,introductiuon,expression,skill,tId,figure,figureName,figureIntroduction,trialName,keyWord,counts,trialLink)
+        values(#{image},#{introductiuon},#{expression},#{skill},#{tId},#{figure},#{figureName},#{figureIntroduction},#{trialName},#{keyWord},0,#{trialLink});
+    </insert>
+
+    <select id="getAllTrials" resultType="Trial">
+        select * from trial where 1 = 1
+        <if test="keyWord != null"> and keyWord like CONCAT('%',#{keyWord},'%')</if>
+         <if test="figureName != null"> and figureName like CONCAT('%',#{figureName},'%')</if>
+         ;
+    </select>
+
+    <delete id="batchDelete">
+        delete * from trial where trialNo in
+        <foreach collection="trialNos" item="trialNo" open="(" separator="," close=")">
+            #{trialNo}
+        </foreach>
+    </delete>
+
+    <select id="getAllCounts" resultType="Integer">
+        select sum(counts) from trial;
+    </select>
+
+</mapper>
